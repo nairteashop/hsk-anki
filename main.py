@@ -42,14 +42,14 @@ css = '''
 
 if charset == 'simplified' or charset == 'both':
     templates.append({
-        'name': '简体汉字->拼音和英语定义',
+        'name': 'Simplified',
         'qfmt': '<div class="character">{{simplified}}</div>',
         'afmt': afmt
     })
 
 if charset == 'traditional' or charset == 'both':
     templates.append({
-        'name': '繁体汉字->拼音和英语定义',
+        'name': 'Traditional',
         'qfmt': '<div class="character">{{traditional}}</div>',
         'afmt': afmt
     })
@@ -62,7 +62,6 @@ hsk_model = genanki.Model(
         {'name': 'traditional'},
         {'name': 'pinyin'},
         {'name': 'englishdef'},
-        {'name': 'hsklevel'},
     ],
     templates=templates,
     css=css)
@@ -78,7 +77,9 @@ for i in range(1, max_hsk_level + 1):
                 continue
             note = genanki.Note(
                 model=hsk_model,
-                fields=[zhsimp, zhtrad, pinyin, defn, str(i)])
+                fields=[zhsimp, zhtrad, pinyin, defn],
+                tags=['hsk' + str(i)]
+            )
             deck.add_note(note)
             total += 1
 
